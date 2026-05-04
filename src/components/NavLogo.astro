@@ -1,0 +1,16 @@
+---
+interface Props {
+  size?: number;
+  className?: string;
+  alt?: string;
+}
+const { size = 32, className = '', alt = 'Patchly' } = Astro.props;
+---
+
+<img
+  src="/logo.png"
+  alt={alt}
+  height={size}
+  style={`height: ${size}px; width: auto; display: inline-block;`}
+  class={className}
+/>

@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import Logo from '../components/Logo.astro';
+import Logo from '../components/NavLogo.astro';
 import { trades } from '../data/trades';
 
 interface Props {
@@ -24,7 +24,7 @@ const { title = 'patchly. Search smart. Get it fixed.', description = 'Describe 
     <header class="bg-white border-b border-line">
       <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
         <a href="/" class="flex items-center gap-2 hover:opacity-80 transition">
-          <Logo size={40} />
+          <Logo size={80} />
         </a>
         <nav class="flex items-center gap-1 sm:gap-3 text-sm">
           {trades.map((t) => (
