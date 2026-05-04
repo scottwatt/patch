@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const lastUpdated = '2026-05-04';
+---
+
+<Layout
+  title="Privacy Policy | patch"
+  description="How patch collects, uses, and protects your information."
+>
+  <section class="max-w-2xl mx-auto px-4 py-12 text-ink/80">
+    <a href="/" class="text-sm text-muted hover:text-accent">← Back</a>
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mt-4 mb-2 text-brand">Privacy Policy</h1>
+    <p class="text-sm text-muted mb-8">Last updated: {lastUpdated}</p>
+
+    <div class="prose prose-sm max-w-none space-y-5 text-sm leading-relaxed">
+      <p>
+        patch ("we", "our", "us") connects homeowners in Bakersfield and Kern County, California with local contractors. This policy explains what information we collect, how we use it, and the choices you have. By using patchapp.org or the patch mobile app, you agree to this policy.
+      </p>
+
+      <h2 class="text-lg font-semibold text-brand pt-4">Information we collect</h2>
+      <p>
+        When you describe a home problem, we collect the text of your description and any photos you choose to attach. If you fill out a contact form, we collect the name, phone number, ZIP code, and details you provide. We also collect basic technical information like your IP address and the type of device or browser you use, in standard server logs.
+      </p>
+      <p>
+        We do not require an account, and we do not collect your name, email, or phone number unless you choose to send it via a contact form.
+      </p>
+
+      <h2 class="text-lg font-semibold text-brand pt-4">How we use your information</h2>
+      <ul class="list-disc pl-5 space-y-2">
+        <li>To match your problem to the right trade and show you a list of local contractors.</li>
+        <li>To process the photo or text you submit so we can give you a better recommendation.</li>
+        <li>To send your contact details to a contractor partner if you submit a lead form, so they can reach out to you.</li>
+        <li>To improve patch (for example, by reviewing how often a search returns useful matches).</li>
+      </ul>
+      <p>
+        We do not sell your information to third parties. We do not share your phone number, address, or problem description with anyone other than the contractor partner you intend to contact.
+      </p>
+
+      <h2 class="text-lg font-semibold text-brand pt-4">Third party services we use</h2>
+      <ul class="list-disc pl-5 space-y-2">
+        <li><strong>Anthropic</strong> processes your search text and any attached photos to suggest the right trade. Anthropic does not retain your data for training. See <a href="https://www.anthropic.com/legal/privacy" class="text-accent underline" rel="noopener" target="_blank">Anthropic's privacy policy</a>.</li>
+        <li><strong>Vercel</strong> hosts the patch website and stores standard web server logs. See <a href="https://vercel.com/legal/privacy-policy" class="text-accent underline" rel="noopener" target="_blank">Vercel's privacy policy</a>.</li>
+      </ul>
+
+      <h2 class="text-lg font-semibold text-brand pt-4">Photos</h2>
+      <p>
+        Photos you attach to a search are sent to Anthropic to help match the right trade and are temporarily stored for the duration of the request. We do not store photos long term. The mobile app may request access to your camera and photo library so you can attach a photo to a search; you can deny these permissions in your device settings without affecting other features of the app.
+      </p>
+
+      <h2 class="text-lg font-semibold text-brand pt-4">Lead and contact data retention</h2>
+      <p>
+        If you submit your contact info via a form, we retain that information for as long as needed to facilitate the connection between you and a contractor, and then delete it within 12 months.
+      </p>
+
+      <h2 class="text-lg font-semibold text-brand pt-4">Children's privacy</h2>
+      <p>
+        patch is not directed to children under 13, and we do not knowingly collect information from children under 13. If you believe we have collected such information, contact us so we can delete it.
+      </p>
+
+      <h2 class="text-lg font-semibold text-brand pt-4">California residents</h2>
+      <p>
+        Under the California Consumer Privacy Act (CCPA), California residents have the right to know what personal information we collect about them, request that we delete it, and opt out of the sale of personal information. We do not sell personal information. To make a request, contact us using the email below.
+      </p>
+
+      <h2 class="text-lg font-semibold text-brand pt-4">Your choices</h2>
+      <ul class="list-disc pl-5 space-y-2">
+        <li>You can use the search without submitting a contact form. Just call the contractor directly using the phone number on their card.</li>
+        <li>You can ask us to delete any contact info you submitted by emailing us.</li>
+        <li>You can deny camera and photo library access in your device settings; the app still works for text only searches.</li>
+      </ul>
+
+      <h2 class="text-lg font-semibold text-brand pt-4">Changes to this policy</h2>
+      <p>
+        We may update this policy from time to time. The "Last updated" date at the top reflects the most recent revision.
+      </p>
+
+      <h2 class="text-lg font-semibold text-brand pt-4">Contact</h2>
+      <p>
+        Questions or requests? Email <a href="mailto:scottwattenbarger@gmail.com" class="text-accent underline">scottwattenbarger@gmail.com</a>.
+      </p>
+
+      <p class="pt-6 text-xs text-muted">
+        This document is provided as a starting point and is not legal advice. We recommend reviewing with an attorney before launch if you handle sensitive data at scale.
+      </p>
+    </div>
+  </section>
+</Layout>
