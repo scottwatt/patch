@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "gen-icons": "capacitor-assets generate --assetPath assets"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.92.0",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@capacitor/assets": "^3.0.5",
     "@types/node": "^25.6.0",
     "typescript": "^5.9.3"
   }
