@@ -1,49 +1,16 @@
 ---
 interface Props {
   size?: number;
-  withWordmark?: boolean;
   className?: string;
+  alt?: string;
 }
-const { size = 32, withWordmark = true, className = '' } = Astro.props;
+const { size = 32, className = '', alt = 'Patchly' } = Astro.props;
 ---
 
-<span class={`inline-flex items-center gap-2 ${className}`}>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 64 64"
-    fill="none"
-    aria-hidden="true"
-  >
-    <!-- Magnifying glass circle -->
-    <circle cx="28" cy="28" r="22" stroke="currentColor" stroke-width="4" fill="none" />
-
-    <!-- House inside the circle: roof + body outline -->
-    <path
-      d="M16 30 L28 19 L40 30 V40 H16 Z"
-      stroke="currentColor"
-      stroke-width="2.5"
-      stroke-linejoin="round"
-      fill="none"
-    />
-
-    <!-- 4 pane window in center of house -->
-    <rect x="24" y="29" width="8" height="8" stroke="currentColor" stroke-width="1.5" fill="none" />
-    <line x1="28" y1="29" x2="28" y2="37" stroke="currentColor" stroke-width="1.5" />
-    <line x1="24" y1="33" x2="32" y2="33" stroke="currentColor" stroke-width="1.5" />
-
-    <!-- Green checkmark, integrated where handle would be -->
-    <path
-      d="M40 36 L46 44 L58 28"
-      stroke="var(--color-accent)"
-      stroke-width="6"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      fill="none"
-    />
-  </svg>
-  {withWordmark && (
-    <span class="font-bold text-xl tracking-tight lowercase" style="font-family: ui-sans-serif, system-ui, sans-serif;">patchly</span>
-  )}
-</span>
+<img
+  src="/logo.png"
+  alt={alt}
+  height={size}
+  style={`height: ${size}px; width: auto; display: inline-block;`}
+  class={className}
+/>
