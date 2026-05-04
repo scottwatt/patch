@@ -8,7 +8,7 @@ export async function getStaticPaths() {
   return trades.map((t) => ({ params: { trade: t.slug } }));
 }
 
-export const prerender = false;
+export const prerender = true;
 
 const { trade: slug } = Astro.params;
 const trade = tradeBySlug(slug!);

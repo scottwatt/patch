@@ -8,7 +8,7 @@ export async function getStaticPaths() {
   return partners.map((p) => ({ params: { id: p.id } }));
 }
 
-export const prerender = false;
+export const prerender = true;
 
 const { id } = Astro.params;
 const pro = partnerById(id!);
