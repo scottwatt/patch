@@ -313,6 +313,24 @@ import { trades } from '../data/trades';
 
       stopProgress();
 
+      // Off topic / no match: show a friendly retry message
+      if (data.offTopic || data.trade === null) {
+        result.innerHTML = `
+          <div class="bg-white border border-line rounded-2xl p-6 text-center">
+            <div class="flex justify-center mb-3 text-muted">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <div class="text-base font-semibold text-brand mb-1">No match yet</div>
+            <p class="text-sm text-muted mb-4 max-w-sm mx-auto">${data.reasoning || "Sorry, we couldn't find anything for that. Please describe your home problem in more detail and try again."}</p>
+            <p class="text-xs text-muted">Try something like &ldquo;water heater leaking&rdquo;, &ldquo;AC won't turn on&rdquo;, or &ldquo;outlets dead in the kitchen&rdquo;.</p>
+          </div>
+        `;
+        return;
+      }
+
       const tradeName = data.tradeName || data.trade;
       const partners = data.partners || [];
       const featured = partners.filter((p: any) => p.tier === 'featured');
