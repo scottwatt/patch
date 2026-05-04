@@ -248,32 +248,34 @@ import { trades } from '../data/trades';
 
   function renderProgress(activeIdx: number): string {
     return `
-      <div class="bg-white rounded-2xl border border-line p-8 text-center">
-        <div class="flex justify-center mb-5 text-brand">
-          <svg width="56" height="56" viewBox="0 0 64 64" fill="none">
-            <circle cx="28" cy="28" r="22" stroke="currentColor" stroke-width="4" fill="none" />
-            <path d="M16 30 L28 19 L40 30 V40 H16 Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="none" />
-            <rect x="24" y="29" width="8" height="8" stroke="currentColor" stroke-width="1.5" fill="none" />
-            <line x1="28" y1="29" x2="28" y2="37" stroke="currentColor" stroke-width="1.5" />
-            <line x1="24" y1="33" x2="32" y2="33" stroke="currentColor" stroke-width="1.5" />
-            <path d="M40 36 L46 44 L58 28" stroke="var(--color-accent)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" class="animate-pulse" />
-          </svg>
-        </div>
-        <div class="text-lg font-semibold text-brand mb-1">Finding the right pros...</div>
-        <div class="text-sm text-muted mb-6 max-w-xs mx-auto">We're analyzing your problem and finding the best matches near you.</div>
-        <div class="space-y-2.5 text-left max-w-xs mx-auto">
-          ${STEPS.map((step, i) => {
-            const done = i < activeIdx;
-            const active = i === activeIdx;
-            return `
-              <div class="flex items-center gap-2.5 text-sm">
-                <span class="w-5 h-5 rounded-full flex items-center justify-center ${done ? 'bg-accent text-white' : active ? 'bg-accent/20 text-accent' : 'bg-soft text-muted'}">
-                  ${done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : active ? '<span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>' : ''}
-                </span>
-                <span class="${done || active ? 'text-ink' : 'text-muted'}">${step}</span>
-              </div>
-            `;
-          }).join('')}
+      <div class="min-h-[80vh] flex items-center justify-center">
+        <div class="bg-white rounded-2xl border border-line p-10 text-center w-full max-w-md shadow-sm">
+          <div class="flex justify-center mb-5 text-brand">
+            <svg width="72" height="72" viewBox="0 0 64 64" fill="none">
+              <circle cx="28" cy="28" r="22" stroke="currentColor" stroke-width="4" fill="none" />
+              <path d="M16 30 L28 19 L40 30 V40 H16 Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="none" />
+              <rect x="24" y="29" width="8" height="8" stroke="currentColor" stroke-width="1.5" fill="none" />
+              <line x1="28" y1="29" x2="28" y2="37" stroke="currentColor" stroke-width="1.5" />
+              <line x1="24" y1="33" x2="32" y2="33" stroke="currentColor" stroke-width="1.5" />
+              <path d="M40 36 L46 44 L58 28" stroke="var(--color-accent)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" class="animate-pulse" />
+            </svg>
+          </div>
+          <div class="text-xl font-semibold text-brand mb-1">Finding the right pros...</div>
+          <div class="text-sm text-muted mb-7 max-w-xs mx-auto">We're analyzing your problem and finding the best matches near you.</div>
+          <div class="space-y-3 text-left max-w-xs mx-auto">
+            ${STEPS.map((step, i) => {
+              const done = i < activeIdx;
+              const active = i === activeIdx;
+              return `
+                <div class="flex items-center gap-3 text-sm">
+                  <span class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${done ? 'bg-accent text-white' : active ? 'bg-accent/20 text-accent' : 'bg-soft text-muted'}">
+                    ${done ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : active ? '<span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>' : ''}
+                  </span>
+                  <span class="${done || active ? 'text-ink font-medium' : 'text-muted'}">${step}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
         </div>
       </div>
     `;
@@ -301,6 +303,10 @@ import { trades } from '../data/trades';
     submit.textContent = 'Searching...';
     result.classList.remove('hidden');
     startProgress();
+    // Scroll the loading screen into view so the user actually sees what's happening
+    requestAnimationFrame(() => {
+      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 
     try {
       const res = await fetch('/api/triage', {
@@ -316,18 +322,21 @@ import { trades } from '../data/trades';
       // Off topic / no match: show a friendly retry message
       if (data.offTopic || data.trade === null) {
         result.innerHTML = `
-          <div class="bg-white border border-line rounded-2xl p-6 text-center">
-            <div class="flex justify-center mb-3 text-muted">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="11" cy="11" r="7"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
+          <div class="min-h-[60vh] flex items-center justify-center">
+            <div class="bg-white border border-line rounded-2xl p-8 text-center w-full max-w-md shadow-sm">
+              <div class="flex justify-center mb-4 text-muted">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </div>
+              <div class="text-lg font-semibold text-brand mb-1">No match yet</div>
+              <p class="text-sm text-muted mb-4 max-w-sm mx-auto">${data.reasoning || "Sorry, we couldn't find anything for that. Please describe your home problem in more detail and try again."}</p>
+              <p class="text-xs text-muted">Try something like &ldquo;water heater leaking&rdquo;, &ldquo;AC won't turn on&rdquo;, or &ldquo;outlets dead in the kitchen&rdquo;.</p>
             </div>
-            <div class="text-base font-semibold text-brand mb-1">No match yet</div>
-            <p class="text-sm text-muted mb-4 max-w-sm mx-auto">${data.reasoning || "Sorry, we couldn't find anything for that. Please describe your home problem in more detail and try again."}</p>
-            <p class="text-xs text-muted">Try something like &ldquo;water heater leaking&rdquo;, &ldquo;AC won't turn on&rdquo;, or &ldquo;outlets dead in the kitchen&rdquo;.</p>
           </div>
         `;
+        result.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
       }
 
@@ -356,20 +365,33 @@ import { trades } from '../data/trades';
           </div>`
         : '';
 
+      const proCount = partners.length;
+      const headerLine = proCount > 0
+        ? `<div class="text-center pb-2">
+            <div class="text-2xl font-bold text-brand">Top matches</div>
+            <div class="text-sm text-muted mt-1">We found ${proCount} ${proCount === 1 ? 'pro' : 'pros'} for your ${tradeName.toLowerCase()} problem.</div>
+          </div>`
+        : `<div class="text-center pb-2">
+            <div class="text-2xl font-bold text-brand">Sounds like ${tradeName.toLowerCase()}</div>
+          </div>`;
+
       result.innerHTML = `
         <div class="space-y-3">
-          <div class="bg-white border border-line rounded-xl p-4">
-            <div class="text-xs font-semibold uppercase tracking-wider text-muted mb-1">Sounds like ${tradeName.toLowerCase()}</div>
-            ${data.reasoning ? `<p class="text-sm text-ink/80">${data.reasoning}</p>` : ''}
-          </div>
+          ${headerLine}
+          ${data.reasoning ? `
+            <div class="bg-white border border-line rounded-xl p-4">
+              <p class="text-sm text-ink/80">${data.reasoning}</p>
+            </div>
+          ` : ''}
           ${featuredHtml}
           ${standardHtml}
           ${empty}
-          <a href="/trades/${data.trade}" class="block text-center text-sm text-accent hover:text-accent-dark underline pt-2">
+          ${partners.length ? `<a href="/trades/${data.trade}" class="block text-center text-sm text-accent hover:text-accent-dark underline pt-2">
             See all ${tradeName.toLowerCase()} contractors &rarr;
-          </a>
+          </a>` : ''}
         </div>
       `;
+      result.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch (err: any) {
       stopProgress();
       result.innerHTML = `
