@@ -8,7 +8,7 @@ const DEV_URL = process.env.CAP_DEV_URL; // e.g. http://192.168.1.42:4321
 
 const config: CapacitorConfig = {
   appId: 'com.patchbakersfield.app',
-  appName: 'patch',
+  appName: 'Patchly',
   webDir: 'public',
   server: {
     url: DEV_URL || PROD_URL,

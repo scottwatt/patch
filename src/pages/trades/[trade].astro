@@ -20,7 +20,7 @@ if (!trade) {
 const tradePartners = partnersByTrade(trade.slug);
 const featured = tradePartners.filter((p) => p.tier === 'featured');
 const standard = tradePartners.filter((p) => p.tier !== 'featured');
-const title = `Bakersfield ${trade.name}. Local contractors | patch`;
+const title = `Bakersfield ${trade.name}. Local contractors | patchly`;
 const description = `${trade.description} Common: ${trade.commonProblems.slice(0, 3).join(', ')}.`;
 ---
 

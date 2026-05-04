@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>patch</string>
+        <string>Patchly</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -48,10 +48,10 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>patch uses your camera so you can attach a photo of the problem (e.g. a leaky pipe) for a better contractor match.</string>
+	<string>Patchly uses your camera so you can attach a photo of the problem (e.g. a leaky pipe) for a better contractor match.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>patch lets you pick a photo of the problem from your library to attach to your search.</string>
+	<string>Patchly lets you pick a photo of the problem from your library to attach to your search.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>patch can save photos to your library if you choose to download them.</string>
+	<string>Patchly can save photos to your library if you choose to download them.</string>
 </dict>
 </plist>

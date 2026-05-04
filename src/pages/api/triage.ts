@@ -9,7 +9,7 @@ const tradeSummaries = trades
   .map((t) => `* ${t.slug}: ${t.name}. ${t.tagline}. Common: ${t.commonProblems.join('; ')}.`)
   .join('\n');
 
-const SYSTEM_PROMPT = `You are a triage agent for Patch, a Bakersfield home services directory. A homeowner describes a problem (and may attach photos); you decide which trade should handle it.
+const SYSTEM_PROMPT = `You are a triage agent for Patchly, a Bakersfield home services directory. A homeowner describes a problem (and may attach photos); you decide which trade should handle it.
 
 Available trades:
 ${tradeSummaries}

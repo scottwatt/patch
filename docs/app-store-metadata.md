@@ -1,4 +1,4 @@
-# App Store Connect metadata for patch
+# App Store Connect metadata for Patchly
 
 Copy-paste-ready text for each field. Adjust anything in [brackets] or rewrite if you want a different angle.
 
@@ -6,15 +6,7 @@ Copy-paste-ready text for each field. Adjust anything in [brackets] or rewrite i
 
 ## App name (30 char max)
 
-**`patch`** (5 chars) — try this first. Likely taken.
-
-If taken, fall backs in order:
-- **`patch — Local Pros`** (18 chars)
-- **`patch: Bakersfield Pros`** (23 chars)
-- **`patch Home Services`** (19 chars)
-- **`Patch — Find a Pro`** (18 chars)
-
-App Store Connect will reject the name if it's already in use; you'll see the error immediately when you create the app record.
+**`Patchly`** (7 chars)
 
 ---
 
@@ -42,11 +34,11 @@ Describe your home problem and get matched to vetted local Bakersfield contracto
 ## Description (4000 char max)
 
 ```
-Got a leaky faucet, broken AC, or a busted garage door? patch is the fastest way to find the right local Bakersfield contractor for any home problem.
+Got a leaky faucet, broken AC, or a busted garage door? Patchly is the fastest way to find the right local Bakersfield contractor for any home problem.
 
 Just describe what's wrong in your own words. Snap a photo if it helps. We figure out which trade you need and show you the top local pros, ranked by rating and reviews. One tap to call.
 
-Why patch
+Why Patchly
 - Search by problem, not by trade. Not sure if it's plumbing or roofing? Just describe what you see.
 - One matched recommendation, not five spam calls. Your phone won't ring off the hook.
 - Local only. Every contractor is a real Kern County business.
@@ -95,7 +87,7 @@ These target the search terms people actually type. Don't repeat your app name (
 Leave it as the default "Initial release" or write:
 
 ```
-Welcome to patch. Search any home problem and get matched with trusted Bakersfield contractors.
+Welcome to Patchly. Search any home problem and get matched with trusted Bakersfield contractors.
 ```
 
 ---
@@ -137,26 +129,26 @@ Other valid options if you don't like Lifestyle: Productivity, Reference. Avoid 
 
 ## Age rating
 
-Run through the App Store Connect questionnaire — answer **No** to everything. You'll get a **4+** rating. patch has no objectionable content.
+Run through the App Store Connect questionnaire — answer **No** to everything. You'll get a **4+** rating. Patchly has no objectionable content.
 
 ---
 
 ## App Privacy Details ("Nutrition Label")
 
-Apple asks a questionnaire about what data you collect. Honest answers for patch:
+Apple asks a questionnaire about what data you collect. Honest answers for Patchly:
 
 | Category | What to select |
 |----------|---------------|
 | Contact info — Name | Yes (collected via lead form, NOT linked to user, NOT for tracking) |
 | Contact info — Phone | Yes (collected via lead form, NOT linked to user, NOT for tracking) |
 | Contact info — Email | No (you don't ask for email) |
-| User content — Photos | Yes (collected for AI matching, NOT linked to user, NOT for tracking) |
+| User content — Photos | Yes (collected for matching, NOT linked to user, NOT for tracking) |
 | User content — Other | Yes (the problem text) (NOT linked to user, NOT for tracking) |
 | Identifiers — Device ID | No |
 | Usage data | No |
 | Diagnostics | No |
 
-Key thing: select **NOT linked to user identity** for everything. patch has no accounts, so nothing IS linked to user identity.
+Key thing: select **NOT linked to user identity** for everything. Patchly has no accounts, so nothing IS linked to user identity.
 
 ---
 

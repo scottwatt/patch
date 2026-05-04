@@ -1,4 +1,4 @@
-# patch — Bakersfield home services directory
+# patchly — Bakersfield home services directory
 
 Describe a home problem, get matched with vetted local contractors, tap to call. Astro + Tailwind + Capacitor + Anthropic.
 
@@ -24,7 +24,7 @@ src/
 │   ├── trades.ts        # 5 trades + their common problems
 │   └── partners.ts      # contractor data + overall rating + reviewCount
 ├── components/
-│   ├── Logo.astro       # patch wordmark + icon
+│   ├── Logo.astro       # patchly wordmark + icon
 │   └── Stars.astro      # star rating component
 ├── layouts/Layout.astro # shared header/footer
 ├── pages/
