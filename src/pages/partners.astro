@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="For Bakersfield contractors. Get featured on patch."
+  description="Local Bakersfield homeowners search for the right contractor. Be one of the ones we recommend."
+>
+  <section class="max-w-3xl mx-auto px-4 py-12">
+    <a href="/" class="text-sm text-muted hover:text-accent">← Back</a>
+    <p class="text-sm font-semibold text-accent uppercase tracking-wider mt-4">For contractors</p>
+    <h1 class="text-4xl font-bold tracking-tight mt-2 mb-4 text-brand">
+      Be on the list. Be at the top.
+    </h1>
+    <p class="text-lg text-ink/70 mb-8">
+      Patch helps Bakersfield homeowners find the right local contractor for their problem. Get listed and get the call.
+    </p>
+
+    <div class="bg-white border border-line rounded-2xl p-6 mb-6">
+      <h2 class="font-semibold text-lg mb-4 text-brand">Two ways to be on patch</h2>
+
+      <div class="border border-accent/30 ring-1 ring-accent/10 rounded-xl p-5 mb-4">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-[10px] uppercase tracking-wider font-semibold bg-accent text-white px-2 py-0.5 rounded">Featured</span>
+          <span class="font-semibold text-brand">$199 / month</span>
+        </div>
+        <ul class="space-y-1.5 text-sm text-ink/70">
+          <li>• Top placement above standard listings on every match for your trade</li>
+          <li>• "Featured" badge on your card</li>
+          <li>• Eligible for trade page hero placement</li>
+          <li>• Priority on multi trade match (e.g. plumbing + handyman ambiguous problems)</li>
+        </ul>
+      </div>
+
+      <div class="border border-line rounded-xl p-5">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">Standard</span>
+          <span class="font-semibold text-brand">Free during launch</span>
+        </div>
+        <ul class="space-y-1.5 text-sm text-ink/70">
+          <li>• Listed on the matched trade page below featured contractors</li>
+          <li>• Direct phone calls. No platform fees, no per lead chase.</li>
+          <li>• Vetting badges (Licensed, Insured, Years in business)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bg-white border border-line rounded-2xl p-6 mb-6">
+      <h2 class="font-semibold text-lg mb-3 text-brand">Why this works for you</h2>
+      <ul class="space-y-2 text-ink/70 text-sm">
+        <li>• <strong>You keep 100% of every job.</strong> No commission. No closed job tracking.</li>
+        <li>• <strong>Prefiltered for trade fit.</strong> We sort out "is this plumbing or roofing?" before the homeowner sees you, so the calls you get are actually for your trade.</li>
+        <li>• <strong>Cancel anytime.</strong> Month to month, no long term contract.</li>
+        <li>• <strong>Local only.</strong> Patch is Bakersfield + Kern County. Homeowners aren't shopping you against contractors in Fresno.</li>
+      </ul>
+    </div>
+
+    <div class="bg-white border border-line rounded-2xl p-6">
+      <h2 class="font-semibold text-lg mb-3 text-brand">Interested?</h2>
+      <p class="text-sm text-muted mb-4">Drop your info. I'll text or email back personally to set up a 15 minute call.</p>
+      <form id="partner-form" class="space-y-3">
+        <input type="hidden" name="trade" value="contractor-signup" />
+        <div class="grid sm:grid-cols-2 gap-3">
+          <input type="text" name="name" required placeholder="Your name" class="w-full rounded-lg border border-line px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent" />
+          <input type="text" name="business" placeholder="Business name" class="w-full rounded-lg border border-line px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent" />
+        </div>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <input type="tel" name="phone" required placeholder="Phone" class="w-full rounded-lg border border-line px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent" />
+          <select name="tradeType" required class="w-full rounded-lg border border-line px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent bg-white">
+            <option value="">Trade…</option>
+            <option>Plumbing</option>
+            <option>HVAC</option>
+            <option>Electrical</option>
+            <option>Roofing</option>
+            <option>Handyman</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <select name="tier" class="w-full rounded-lg border border-line px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent bg-white">
+          <option value="">Interested in… (optional)</option>
+          <option value="featured">Featured listing, $199/mo</option>
+          <option value="standard">Standard listing, free during launch</option>
+          <option value="not-sure">Not sure yet, want to learn more</option>
+        </select>
+        <textarea name="problem" rows="3" placeholder="Anything you want me to know? (optional)" class="w-full rounded-lg border border-line px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent resize-none"></textarea>
+        <button type="submit" class="w-full bg-accent hover:bg-accent-dark text-white font-semibold px-4 py-3 rounded-lg transition">
+          Send
+        </button>
+        <div id="partner-status" class="text-sm text-center hidden"></div>
+      </form>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const form = document.getElementById('partner-form') as HTMLFormElement;
+  const status = document.getElementById('partner-status') as HTMLDivElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const data = {
+      trade: 'contractor-signup',
+      name: fd.get('name'),
+      phone: fd.get('phone'),
+      problem: `Trade: ${fd.get('tradeType') || 'unspecified'}\nBusiness: ${fd.get('business') || 'n/a'}\nTier interest: ${fd.get('tier') || 'unspecified'}\n\n${fd.get('problem') || ''}`.trim(),
+    };
+    status.classList.remove('hidden', 'text-green-700', 'text-red-700');
+    status.classList.add('text-muted');
+    status.textContent = 'Sending…';
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Failed to send');
+      status.classList.remove('text-muted');
+      status.classList.add('text-green-700');
+      status.textContent = "Got it. I'll be in touch within 24 hours.";
+      form.reset();
+    } catch (err: any) {
+      status.classList.remove('text-muted');
+      status.classList.add('text-red-700');
+      status.textContent = `Couldn't send: ${err.message}.`;
+    }
+  });
+</script>

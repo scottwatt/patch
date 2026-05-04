@@ -1,0 +1,101 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Stars from '../../components/Stars.astro';
+import { partners, partnerById } from '../../data/partners';
+import { tradeBySlug } from '../../data/trades';
+
+export async function getStaticPaths() {
+  return partners.map((p) => ({ params: { id: p.id } }));
+}
+
+export const prerender = false;
+
+const { id } = Astro.params;
+const pro = partnerById(id!);
+
+if (!pro) {
+  return Astro.redirect('/');
+}
+
+const trade = tradeBySlug(pro.trade);
+const tel = pro.phone.replace(/[^0-9+]/g, '');
+---
+
+<Layout
+  title={`${pro.name}. Bakersfield ${trade?.name || pro.trade} | patch`}
+  description={pro.about || pro.blurb}
+>
+  <section class="bg-white border-b border-line">
+    <div class="max-w-3xl mx-auto px-4 py-8">
+      <a href={`/trades/${pro.trade}`} class="text-sm text-muted hover:text-accent">← Back to {trade?.name.toLowerCase()}</a>
+
+      <div class="mt-4 flex items-start justify-between gap-4 flex-wrap">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-1.5 flex-wrap mb-2">
+            {pro.tier === 'featured' && <span class="text-[10px] uppercase tracking-wider font-semibold bg-accent text-white px-2 py-0.5 rounded">Featured</span>}
+            {pro.licensed && <span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">Licensed</span>}
+            {pro.insured && <span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">Insured</span>}
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-brand">{pro.name}</h1>
+          {pro.rating !== undefined && (
+            <div class="mt-2">
+              <Stars rating={pro.rating} reviewCount={pro.reviewCount} size="md" />
+            </div>
+          )}
+          <p class="text-base text-muted mt-3">{pro.serviceArea}</p>
+        </div>
+        <a
+          href={`tel:${tel}`}
+          class="bg-accent hover:bg-accent-dark text-white font-semibold px-5 py-3 rounded-lg whitespace-nowrap"
+        >
+          Call {pro.phone}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-3xl mx-auto px-4 py-8 space-y-6">
+    <div class="bg-white border border-line rounded-2xl p-6">
+      <h2 class="font-semibold text-lg text-brand mb-2">About</h2>
+      <p class="text-sm text-ink/80 leading-relaxed">{pro.about || pro.blurb}</p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5">
+        {pro.yearsInBusiness && (
+          <div class="bg-soft rounded-lg p-3">
+            <div class="text-xs uppercase tracking-wider text-muted">Years</div>
+            <div class="font-semibold text-brand mt-0.5">{pro.yearsInBusiness}+</div>
+          </div>
+        )}
+        {pro.licensed && (
+          <div class="bg-soft rounded-lg p-3">
+            <div class="text-xs uppercase tracking-wider text-muted">Licensed</div>
+            <div class="font-semibold text-brand mt-0.5">Yes</div>
+          </div>
+        )}
+        {pro.insured && (
+          <div class="bg-soft rounded-lg p-3">
+            <div class="text-xs uppercase tracking-wider text-muted">Insured</div>
+            <div class="font-semibold text-brand mt-0.5">Yes</div>
+          </div>
+        )}
+        {pro.rating !== undefined && (
+          <div class="bg-soft rounded-lg p-3">
+            <div class="text-xs uppercase tracking-wider text-muted">Rating</div>
+            <div class="font-semibold text-brand mt-0.5">{pro.rating.toFixed(1)} / 5</div>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <div class="bg-white border border-line rounded-2xl p-6 text-center">
+      <h2 class="font-semibold text-lg text-brand mb-1">Ready to call?</h2>
+      <p class="text-sm text-muted mb-4">{pro.name} answers the phone during business hours. No bots, no call centers.</p>
+      <a
+        href={`tel:${tel}`}
+        class="inline-block bg-accent hover:bg-accent-dark text-white font-semibold px-6 py-3 rounded-lg"
+      >
+        Call {pro.phone}
+      </a>
+    </div>
+  </div>
+</Layout>

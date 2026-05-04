@@ -1,0 +1,367 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Logo from '../components/Logo.astro';
+import { trades } from '../data/trades';
+---
+
+<Layout>
+  <section class="bg-white">
+    <div class="max-w-2xl mx-auto px-4 pt-12 pb-10 text-center">
+      <div class="flex justify-center mb-4 text-brand">
+        <Logo size={48} withWordmark={false} />
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-2 text-brand">
+        Search smart.
+      </h1>
+      <p class="text-4xl sm:text-5xl font-bold tracking-tight mb-6 text-accent">
+        Get it fixed.
+      </p>
+      <p class="text-base text-muted mb-8 max-w-md mx-auto">
+        Describe your home problem. We match you with trusted local Bakersfield pros.
+      </p>
+
+      <form id="triage-form" class="bg-white rounded-2xl shadow-sm border border-line p-4 text-left">
+        <label for="problem" class="block text-sm font-semibold text-ink mb-2">Describe the problem in detail</label>
+        <textarea
+          id="problem"
+          name="problem"
+          rows="4"
+          required
+          maxlength="600"
+          placeholder="e.g. My kitchen sink has a leak under the cabinet. It started a few days ago."
+          class="w-full rounded-lg border border-line px-3 py-2.5 text-base focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent resize-none"
+        ></textarea>
+        <div class="flex justify-end -mt-1">
+          <span id="char-count" class="text-xs text-muted">0 / 600</span>
+        </div>
+
+        <div class="mt-4">
+          <label class="block text-sm font-semibold text-ink mb-2">Add photos (optional)</label>
+          <div id="photo-grid" class="flex gap-2 flex-wrap"></div>
+          <input id="photo-input" type="file" accept="image/*" multiple class="hidden" />
+        </div>
+
+        <button
+          type="submit"
+          id="triage-submit"
+          class="w-full mt-5 bg-accent hover:bg-accent-dark text-white font-semibold px-5 py-3.5 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Find Pros
+        </button>
+        <p class="text-xs text-muted text-center mt-3">We match you with trusted local pros. Free. No account.</p>
+      </form>
+
+      <div id="triage-result" class="mt-6 text-left hidden"></div>
+
+      <div class="mt-4 text-xs text-muted">
+        Try:
+        <button class="example-prompt underline hover:text-accent" data-prompt="My kitchen sink has a leak under the cabinet. It started a few days ago.">leaky sink</button>
+        ·
+        <button class="example-prompt underline hover:text-accent" data-prompt="AC won't turn on and it's 105 outside">AC won't turn on</button>
+        ·
+        <button class="example-prompt underline hover:text-accent" data-prompt="Half my kitchen outlets stopped working">outlets dead</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-5xl mx-auto px-4 py-10">
+    <h2 class="text-sm font-semibold uppercase tracking-wider text-muted mb-3 px-1">Or browse by trade</h2>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+      {trades.map((t) => (
+        <a href={`/trades/${t.slug}`} class="group bg-white border border-line rounded-xl p-4 hover:border-accent hover:shadow-sm transition">
+          <div class="font-semibold text-base text-brand group-hover:text-accent transition">{t.name}</div>
+          <div class="text-xs text-muted mt-1 line-clamp-2">{t.tagline}</div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="max-w-3xl mx-auto px-4 py-10">
+    <div class="grid sm:grid-cols-3 gap-6 text-left">
+      <div>
+        <div class="text-accent font-bold mb-1">Right trade, first try.</div>
+        <p class="text-sm text-muted">Not sure if it's plumbing or roofing? Describe it. We figure out who to call.</p>
+      </div>
+      <div>
+        <div class="text-accent font-bold mb-1">Local only.</div>
+        <p class="text-sm text-muted">Every contractor is a real Kern County business. No call centers.</p>
+      </div>
+      <div>
+        <div class="text-accent font-bold mb-1">Your call to make.</div>
+        <p class="text-sm text-muted">See multiple pros, compare reviews, call who you want.</p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { Capacitor } from '@capacitor/core';
+
+  const form = document.getElementById('triage-form') as HTMLFormElement;
+  const textarea = document.getElementById('problem') as HTMLTextAreaElement;
+  const submit = document.getElementById('triage-submit') as HTMLButtonElement;
+  const result = document.getElementById('triage-result') as HTMLDivElement;
+  const charCount = document.getElementById('char-count') as HTMLSpanElement;
+  const photoInput = document.getElementById('photo-input') as HTMLInputElement;
+  const photoGrid = document.getElementById('photo-grid') as HTMLDivElement;
+
+  const MAX_PHOTOS = 3;
+  const photos: { name: string; dataUrl: string }[] = [];
+
+  const isNative = Capacitor.isNativePlatform();
+
+  async function addPhotoNative() {
+    const { Camera, CameraResultType, CameraSource } = await import('@capacitor/camera');
+    try {
+      const photo = await Camera.getPhoto({
+        quality: 80,
+        resultType: CameraResultType.Base64,
+        source: CameraSource.Prompt,
+        allowEditing: false,
+        promptLabelHeader: 'Add a photo',
+        promptLabelPhoto: 'Choose from library',
+        promptLabelPicture: 'Take a photo',
+      });
+      if (photo.base64String) {
+        const fmt = photo.format || 'jpeg';
+        const dataUrl = `data:image/${fmt};base64,${photo.base64String}`;
+        photos.push({ name: `photo.${fmt}`, dataUrl });
+        renderPhotos();
+      }
+    } catch (err) {
+      // User cancelled or denied permission. Silent.
+      console.warn('Camera cancelled:', err);
+    }
+  }
+
+  textarea.addEventListener('input', () => {
+    charCount.textContent = `${textarea.value.length} / 600`;
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('.example-prompt').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      textarea.value = btn.dataset.prompt || '';
+      textarea.dispatchEvent(new Event('input'));
+      textarea.focus();
+    });
+  });
+
+  function renderPhotos() {
+    photoGrid.innerHTML =
+      photos
+        .map(
+          (p, i) => `
+          <div class="relative w-20 h-20 rounded-lg overflow-hidden border border-line group">
+            <img src="${p.dataUrl}" alt="${p.name}" class="w-full h-full object-cover" />
+            <button type="button" data-remove="${i}" class="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/70 text-white text-xs leading-none flex items-center justify-center opacity-0 group-hover:opacity-100 transition" aria-label="Remove">×</button>
+          </div>
+        `
+        )
+        .join('') +
+      (photos.length < MAX_PHOTOS
+        ? `<button type="button" id="photo-add" class="w-20 h-20 rounded-lg border-2 border-dashed border-line hover:border-accent hover:text-accent flex items-center justify-center text-2xl text-muted transition" aria-label="Add photo">+</button>`
+        : '');
+
+    document.getElementById('photo-add')?.addEventListener('click', () => {
+      if (isNative) {
+        addPhotoNative();
+      } else {
+        photoInput.click();
+      }
+    });
+    photoGrid.querySelectorAll<HTMLButtonElement>('[data-remove]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        photos.splice(Number(btn.dataset.remove), 1);
+        renderPhotos();
+      });
+    });
+  }
+
+  photoInput.addEventListener('change', async () => {
+    const files = Array.from(photoInput.files ?? []).slice(0, MAX_PHOTOS - photos.length);
+    for (const file of files) {
+      if (!file.type.startsWith('image/')) continue;
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      photos.push({ name: file.name, dataUrl });
+    }
+    photoInput.value = '';
+    renderPhotos();
+  });
+
+  renderPhotos();
+
+  function starSvg(filled: boolean): string {
+    return `<svg width="14" height="14" viewBox="0 0 24 24" fill="${filled ? 'var(--color-star)' : 'var(--color-line)'}" aria-hidden="true"><path d="M12 2 L14.9 8.6 L22 9.3 L16.5 14 L18.2 21 L12 17.3 L5.8 21 L7.5 14 L2 9.3 L9.1 8.6 Z"/></svg>`;
+  }
+
+  function starsBlock(rating: number, count?: number): string {
+    if (rating == null) return '';
+    const full = Math.floor(rating);
+    let s = '<span class="inline-flex items-center gap-1">';
+    for (let i = 0; i < 5; i++) s += starSvg(i < full);
+    s += `<span class="text-xs font-semibold text-ink ml-1">${rating.toFixed(1)}</span>`;
+    if (count !== undefined) s += `<span class="text-xs text-muted">(${count})</span>`;
+    s += '</span>';
+    return s;
+  }
+
+  function partnerCard(p: any): string {
+    const tel = p.phone.replace(/[^0-9+]/g, '');
+    const featured = p.tier === 'featured';
+    const badges = [
+      featured ? '<span class="text-[10px] uppercase tracking-wider font-semibold bg-accent text-white px-2 py-0.5 rounded">Featured</span>' : '',
+      p.licensed ? '<span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">Licensed</span>' : '',
+      p.insured ? '<span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">Insured</span>' : '',
+      p.yearsInBusiness ? `<span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">${p.yearsInBusiness}+ yrs</span>` : '',
+    ].filter(Boolean).join(' ');
+
+    return `
+      <div class="bg-white border ${featured ? 'border-accent/30 ring-1 ring-accent/10' : 'border-line'} rounded-xl p-4 hover:shadow-md transition">
+        <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-1.5 flex-wrap mb-1.5">${badges}</div>
+            <a href="/pros/${p.id}" class="font-semibold text-base text-brand hover:text-accent">${p.name}</a>
+            ${p.rating ? `<div class="mt-1">${starsBlock(p.rating, p.reviewCount)}</div>` : ''}
+            <div class="text-sm text-ink/70 mt-1.5">${p.blurb}</div>
+            <div class="text-xs text-muted mt-1">${p.serviceArea}</div>
+            <a href="/pros/${p.id}" class="text-xs text-accent hover:text-accent-dark inline-block mt-2">View profile and reviews →</a>
+          </div>
+          <a href="tel:${tel}" class="bg-accent hover:bg-accent-dark text-white text-center font-medium px-4 py-2.5 rounded-lg whitespace-nowrap">
+            Call ${p.phone}
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  const STEPS = [
+    'Analyzing your request',
+    'Finding qualified pros',
+    'Checking availability',
+    'Ranking best matches',
+  ];
+
+  function renderProgress(activeIdx: number): string {
+    return `
+      <div class="bg-white rounded-2xl border border-line p-8 text-center">
+        <div class="flex justify-center mb-5 text-brand">
+          <svg width="56" height="56" viewBox="0 0 64 64" fill="none">
+            <circle cx="28" cy="28" r="22" stroke="currentColor" stroke-width="4" fill="none" />
+            <path d="M16 30 L28 19 L40 30 V40 H16 Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill="none" />
+            <rect x="24" y="29" width="8" height="8" stroke="currentColor" stroke-width="1.5" fill="none" />
+            <line x1="28" y1="29" x2="28" y2="37" stroke="currentColor" stroke-width="1.5" />
+            <line x1="24" y1="33" x2="32" y2="33" stroke="currentColor" stroke-width="1.5" />
+            <path d="M40 36 L46 44 L58 28" stroke="var(--color-accent)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" class="animate-pulse" />
+          </svg>
+        </div>
+        <div class="text-lg font-semibold text-brand mb-1">Finding the right pros...</div>
+        <div class="text-sm text-muted mb-6 max-w-xs mx-auto">We're analyzing your problem and finding the best matches near you.</div>
+        <div class="space-y-2.5 text-left max-w-xs mx-auto">
+          ${STEPS.map((step, i) => {
+            const done = i < activeIdx;
+            const active = i === activeIdx;
+            return `
+              <div class="flex items-center gap-2.5 text-sm">
+                <span class="w-5 h-5 rounded-full flex items-center justify-center ${done ? 'bg-accent text-white' : active ? 'bg-accent/20 text-accent' : 'bg-soft text-muted'}">
+                  ${done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : active ? '<span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>' : ''}
+                </span>
+                <span class="${done || active ? 'text-ink' : 'text-muted'}">${step}</span>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  let progressTimer: any;
+  function startProgress() {
+    let idx = 0;
+    result.innerHTML = renderProgress(idx);
+    progressTimer = setInterval(() => {
+      idx = Math.min(idx + 1, STEPS.length - 1);
+      result.innerHTML = renderProgress(idx);
+    }, 700);
+  }
+  function stopProgress() {
+    clearInterval(progressTimer);
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const problem = textarea.value.trim();
+    if (!problem) return;
+
+    submit.disabled = true;
+    submit.textContent = 'Searching...';
+    result.classList.remove('hidden');
+    startProgress();
+
+    try {
+      const res = await fetch('/api/triage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ problem, photos: photos.map((p) => p.dataUrl) }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Something went wrong');
+
+      stopProgress();
+
+      const tradeName = data.tradeName || data.trade;
+      const partners = data.partners || [];
+      const featured = partners.filter((p: any) => p.tier === 'featured');
+      const standard = partners.filter((p: any) => p.tier !== 'featured');
+
+      const featuredHtml = featured.length
+        ? `<div class="space-y-2">
+            <div class="text-xs uppercase tracking-wider text-muted px-1">Featured</div>
+            ${featured.map(partnerCard).join('')}
+          </div>`
+        : '';
+
+      const standardHtml = standard.length
+        ? `<div class="space-y-2 ${featured.length ? 'pt-2' : ''}">
+            ${featured.length ? `<div class="text-xs uppercase tracking-wider text-muted px-1">More ${tradeName.toLowerCase()} contractors</div>` : ''}
+            ${standard.map(partnerCard).join('')}
+          </div>`
+        : '';
+
+      const empty = !partners.length
+        ? `<div class="text-sm text-muted p-4 bg-white rounded-xl border border-line">
+            No contractors onboarded for ${tradeName} yet. <a href="/partners" class="text-accent underline">Are you a contractor?</a>
+          </div>`
+        : '';
+
+      result.innerHTML = `
+        <div class="space-y-3">
+          <div class="bg-white border border-line rounded-xl p-4">
+            <div class="text-xs font-semibold uppercase tracking-wider text-muted mb-1">Sounds like ${tradeName.toLowerCase()}</div>
+            ${data.reasoning ? `<p class="text-sm text-ink/80">${data.reasoning}</p>` : ''}
+          </div>
+          ${featuredHtml}
+          ${standardHtml}
+          ${empty}
+          <a href="/trades/${data.trade}" class="block text-center text-sm text-accent hover:text-accent-dark underline pt-2">
+            See all ${tradeName.toLowerCase()} contractors &rarr;
+          </a>
+        </div>
+      `;
+    } catch (err: any) {
+      stopProgress();
+      result.innerHTML = `
+        <div class="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-800">
+          Couldn't search right now: ${err.message}. Try browsing trades below.
+        </div>
+      `;
+    } finally {
+      submit.disabled = false;
+      submit.textContent = 'Find Pros';
+    }
+  });
+</script>

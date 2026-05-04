@@ -1,0 +1,51 @@
+---
+interface Props {
+  rating: number;
+  reviewCount?: number;
+  size?: 'sm' | 'md' | 'lg';
+  showCount?: boolean;
+}
+const { rating, reviewCount, size = 'sm', showCount = true } = Astro.props;
+
+const sizes = {
+  sm: { star: 14, text: 'text-xs', gap: 'gap-1' },
+  md: { star: 18, text: 'text-sm', gap: 'gap-1.5' },
+  lg: { star: 22, text: 'text-base', gap: 'gap-2' },
+};
+const cfg = sizes[size];
+const fullStars = Math.floor(rating);
+const halfStar = rating - fullStars >= 0.5;
+---
+
+<span class={`inline-flex items-center ${cfg.gap}`}>
+  <span class="inline-flex items-center" aria-label={`${rating} out of 5`}>
+    {Array.from({ length: 5 }).map((_, i) => {
+      const filled = i < fullStars;
+      const half = !filled && i === fullStars && halfStar;
+      return (
+        <svg width={cfg.star} height={cfg.star} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          {half ? (
+            <>
+              <defs>
+                <linearGradient id={`half-${i}-${rating}`}>
+                  <stop offset="50%" stop-color="var(--color-star)" />
+                  <stop offset="50%" stop-color="var(--color-line)" />
+                </linearGradient>
+              </defs>
+              <path d="M12 2 L14.9 8.6 L22 9.3 L16.5 14 L18.2 21 L12 17.3 L5.8 21 L7.5 14 L2 9.3 L9.1 8.6 Z" fill={`url(#half-${i}-${rating})`} />
+            </>
+          ) : (
+            <path
+              d="M12 2 L14.9 8.6 L22 9.3 L16.5 14 L18.2 21 L12 17.3 L5.8 21 L7.5 14 L2 9.3 L9.1 8.6 Z"
+              fill={filled ? 'var(--color-star)' : 'var(--color-line)'}
+            />
+          )}
+        </svg>
+      );
+    })}
+  </span>
+  <span class={`${cfg.text} font-semibold text-ink`}>{rating.toFixed(1)}</span>
+  {showCount && reviewCount !== undefined && (
+    <span class={`${cfg.text} text-muted`}>({reviewCount})</span>
+  )}
+</span>

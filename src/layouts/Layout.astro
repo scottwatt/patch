@@ -1,0 +1,58 @@
+---
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import { trades } from '../data/trades';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'patch. Search smart. Get it fixed.', description = 'Describe your home problem. We match you with vetted local Bakersfield contractors. No spam calls.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen flex flex-col bg-soft text-ink">
+    <header class="bg-white border-b border-line">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 text-brand hover:text-brand-dark transition">
+          <Logo size={28} />
+        </a>
+        <nav class="flex items-center gap-1 sm:gap-3 text-sm">
+          {trades.map((t) => (
+            <a href={`/trades/${t.slug}`} class="hidden md:inline px-2 py-1 rounded hover:bg-soft text-muted hover:text-ink transition">
+              {t.name}
+            </a>
+          ))}
+          <a href="/partners" class="ml-2 px-3 py-1.5 rounded-full border border-line hover:border-accent hover:text-accent text-muted transition text-sm font-medium">
+            For contractors
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="border-t border-line bg-white mt-16">
+      <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm text-muted">
+        <div class="flex items-center gap-2">
+          <Logo size={20} />
+          <span>. Bakersfield home services, the right pro the first time.</span>
+        </div>
+        <div class="flex gap-4">
+          <a href="/partners" class="hover:text-accent">For contractors</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

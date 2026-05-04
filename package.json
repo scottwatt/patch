@@ -1,0 +1,31 @@
+{
+  "name": "patch",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.92.0",
+    "@astrojs/node": "^10.0.6",
+    "@capacitor/android": "^8.3.1",
+    "@capacitor/camera": "^8.2.0",
+    "@capacitor/cli": "^8.3.1",
+    "@capacitor/core": "^8.3.1",
+    "@capacitor/ios": "^8.3.1",
+    "@tailwindcss/vite": "^4.2.4",
+    "astro": "^6.2.1",
+    "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@types/node": "^25.6.0",
+    "typescript": "^5.9.3"
+  }
+}
