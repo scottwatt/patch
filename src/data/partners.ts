@@ -50,7 +50,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 10,
     rating: 4.9,
     reviewCount: 750,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-2',
     name: 'Hometown Plumbing Sewer & Drain Inc.',
@@ -64,7 +64,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 20,
     rating: 4.9,
     reviewCount: 640,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-3',
     name: 'Cisneros Brothers Plumbing, Heating & AC Repair',
@@ -78,7 +78,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 20,
     rating: 5.0,
     reviewCount: 268,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-4',
     name: 'The Plumbing Doc',
@@ -92,7 +92,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 20,
     rating: 4.9,
     reviewCount: 346,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-5',
     name: 'Can Do Crew Plumbing Heating & AC',
@@ -106,7 +106,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 30,
     rating: 4.8,
     reviewCount: 2500,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-6',
     name: 'Bakersfield Plumbing Company',
@@ -121,7 +121,7 @@ const partnerData: Partner[] = [
     rating: 4.8,
     reviewCount: 451,
     about: 'One of the longest tenured plumbing operations in Bakersfield. Located at 4625 District Boulevard.',
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-7',
     name: 'Precision Plumbing and Drain',
@@ -135,7 +135,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 5,
     rating: 5.0,
     reviewCount: 157,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-8',
     name: 'Sky Royal Plumbing',
@@ -202,7 +202,7 @@ const partnerData: Partner[] = [
     insured: false,
     rating: 4.9,
     reviewCount: 76,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-13',
     name: 'Slater Plumbing & Mechanical',
@@ -216,7 +216,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 25,
     rating: 5.0,
     reviewCount: 68,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-14',
     name: 'Advanced Plumbing Service',
@@ -244,7 +244,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 30,
     rating: 4.7,
     reviewCount: 203,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-16',
     name: 'HPS Plumbing Services',
@@ -258,7 +258,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 5,
     rating: 4.7,
     reviewCount: 203,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-17',
     name: 'The Plumbing Doc (Stockdale)',
@@ -272,7 +272,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 20,
     rating: 4.6,
     reviewCount: 222,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-18',
     name: 'A1 Plumbing',
@@ -286,7 +286,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 10,
     rating: 4.6,
     reviewCount: 92,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-19',
     name: "America's Best Plumbing",
@@ -300,7 +300,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 20,
     rating: 4.5,
     reviewCount: 138,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-20',
     name: "Stan's Discount Rooter & Plumbing",
@@ -314,7 +314,7 @@ const partnerData: Partner[] = [
     yearsInBusiness: 10,
     rating: 4.2,
     reviewCount: 115,
-  , open24Hours: true },
+   open24Hours: true },
   {
     id: 'p-plumb-21',
     name: 'The Honest Plumber',
