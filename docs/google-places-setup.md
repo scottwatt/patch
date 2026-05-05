@@ -63,19 +63,34 @@ GOOGLE_PLACES_API_KEY=AIza...
 
 ### 8. Look up Google place IDs for your contractors
 
-For each contractor you want enriched data for, you need their **Google Place ID**.
+You have two paths.
 
-**Easiest way (per contractor):**
+**Bulk (recommended): one command looks up all 187 partners in ~30 seconds.**
+
+```sh
+npm run find-place-ids
+```
+
+The script reads every partner from `src/data/partners.ts`, queries Google Places "Text Search" with `<name> Bakersfield CA`, prefers a result that matches the partner's phone number (high confidence), falls back to the top result otherwise, and writes everything to `src/data/place-ids.json`. Re-runs are safe — it skips partners that already have a place ID.
+
+Output legend:
+- ✓ matched by phone (definitely correct)
+- ~ first search result (worth eyeballing if the name is generic, e.g. "Sample Plumbing Co.")
+- ✗ no match found (handful of these you'd manually look up)
+
+After running, commit `src/data/place-ids.json`, push, and the next Vercel deploy populates hours and reviews on every contractor with a place ID.
+
+Cost of the lookup itself: roughly $0.005 per call × 187 partners = under $1. Well inside Google's free tier.
+
+**Manual (per contractor):** for the few that didn't get a match or that you want to override:
+
 1. Go to https://developers.google.com/maps/documentation/places/web-service/place-id
 2. Type the contractor name + "Bakersfield" in the search box
 3. Click their pin on the map
 4. Copy the place ID (starts with `ChIJ...`)
-5. Open `src/data/partners.ts`, find that contractor's entry, add:
-   ```ts
-   googlePlaceId: 'ChIJ...',
-   ```
-
-**Faster way (batch):** ask me and I'll write a script that uses the Places API "Find Place" endpoint to look up all your contractors at once based on name + address.
+5. Either:
+   - Add the entry to `src/data/place-ids.json` directly: `"p-plumb-1": "ChIJ..."`,
+   - Or add `googlePlaceId: 'ChIJ...'` to that partner in `partners.ts`. The inline version always wins over the JSON file.
 
 ### 9. Push and deploy
 

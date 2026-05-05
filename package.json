@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "gen-icons": "capacitor-assets generate --assetPath assets"
+    "gen-icons": "capacitor-assets generate --assetPath assets",
+    "find-place-ids": "node scripts/find-place-ids.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.92.0",

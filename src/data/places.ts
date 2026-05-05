@@ -1,4 +1,7 @@
 import type { Partner, Review } from './partners';
+import placeIdsRaw from './place-ids.json' with { type: 'json' };
+
+const PLACE_IDS = placeIdsRaw as Record<string, string>;
 
 export type PlaceData = {
   hours?: string[];
@@ -9,10 +12,16 @@ export type PlaceData = {
 // Per-build cache so we don't re-fetch the same place_id during prerender of multiple pages.
 const cache = new Map<string, PlaceData>();
 
+// Resolve place ID from inline partner field OR the bulk JSON map (npm run find-place-ids writes the JSON).
+function resolvePlaceId(partner: Partner): string | undefined {
+  return partner.googlePlaceId || PLACE_IDS[partner.id];
+}
+
 /**
  * Returns hours and reviews for a partner, in priority order:
  *   1. Manual hours/reviews on the partner record (always win).
- *   2. Google Places API live data (if googlePlaceId set + GOOGLE_PLACES_API_KEY env var).
+ *   2. Google Places API live data (if a place ID is known via partner field or place-ids.json,
+ *      and GOOGLE_PLACES_API_KEY env var is set).
  *   3. Empty.
  *
  * Called at build time during page prerender. Failures are silent (returns empty).
@@ -31,12 +40,13 @@ export async function getPlaceData(partner: Partner): Promise<PlaceData> {
     };
   }
 
-  if (!partner.googlePlaceId) {
+  const placeId = resolvePlaceId(partner);
+  if (!placeId) {
     return { source: 'none' };
   }
 
-  if (cache.has(partner.googlePlaceId)) {
-    return cache.get(partner.googlePlaceId)!;
+  if (cache.has(placeId)) {
+    return cache.get(placeId)!;
   }
 
   const apiKey = import.meta.env.GOOGLE_PLACES_API_KEY;
@@ -46,7 +56,7 @@ export async function getPlaceData(partner: Partner): Promise<PlaceData> {
 
   try {
     const res = await fetch(
-      `https://places.googleapis.com/v1/places/${encodeURIComponent(partner.googlePlaceId)}`,
+      `https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}`,
       {
         headers: {
           'X-Goog-Api-Key': apiKey,
@@ -56,9 +66,9 @@ export async function getPlaceData(partner: Partner): Promise<PlaceData> {
     );
 
     if (!res.ok) {
-      console.warn(`Google Places fetch failed for ${partner.id} (${partner.googlePlaceId}): ${res.status}`);
+      console.warn(`Google Places fetch failed for ${partner.id} (${placeId}): ${res.status}`);
       const empty: PlaceData = { source: 'none' };
-      cache.set(partner.googlePlaceId, empty);
+      cache.set(placeId, empty);
       return empty;
     }
 
@@ -79,7 +89,7 @@ export async function getPlaceData(partner: Partner): Promise<PlaceData> {
       source: 'google',
     };
 
-    cache.set(partner.googlePlaceId, result);
+    cache.set(placeId, result);
     return result;
   } catch (err) {
     console.warn(`Google Places fetch error for ${partner.id}:`, err);
