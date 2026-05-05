@@ -24,7 +24,11 @@ const { title = 'patchly. Search smart. Get it fixed.', description = 'Describe 
     <header class="bg-white border-b border-line">
       <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
         <a href="/" class="flex items-center gap-2 hover:opacity-80 transition">
-          <Logo size={80} />
+          <div style="overflow: hidden; width: 48px; height: 48px;">
+            <div style="margin: -16px 0 0 -16px;">
+              <Logo size={80} />
+            </div>
+          </div>
         </a>
         <nav class="flex items-center gap-1 sm:gap-3 text-sm">
           {trades.map((t) => (
@@ -46,8 +50,12 @@ const { title = 'patchly. Search smart. Get it fixed.', description = 'Describe 
     <footer class="border-t border-line bg-white mt-16">
       <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm text-muted">
         <div class="flex items-center gap-2">
-          <Logo size={28} />
-          <span>. Bakersfield home services, the right pro the first time.</span>
+          <div style="overflow: hidden; width: 24px; height: 24px;">
+            <div style="margin: -8px 0 0 -8px;">
+              <Logo size={40} />
+            </div>
+          </div>
+          <span>Patchly. Bakersfield home services, the right pro the first time.</span>
         </div>
         <div class="flex gap-4">
           <a href="/partners" class="hover:text-accent">For contractors</a>
