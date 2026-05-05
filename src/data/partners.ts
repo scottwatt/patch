@@ -407,12 +407,21 @@ const partnerData: Partner[] = [
 
 export const partners = partnerData;
 
-// Featured partners first, then standard. Within each tier, sort by rating descending.
+// True if the partner's phone number starts with the local Bakersfield 661 area code.
+function isLocal661(p: Partner): boolean {
+  return p.phone.replace(/[^0-9]/g, '').startsWith('661');
+}
+
+// Sort order: Featured first, then standard. Within each tier, local 661 numbers
+// before out of area numbers. Within those, by rating descending.
 export function partnersByTrade(slug: string): Partner[] {
   return partners
     .filter((p) => p.trade === slug)
     .sort((a, b) => {
       if (a.tier !== b.tier) return a.tier === 'featured' ? -1 : 1;
+      const a661 = isLocal661(a);
+      const b661 = isLocal661(b);
+      if (a661 !== b661) return a661 ? -1 : 1;
       return (b.rating ?? 0) - (a.rating ?? 0);
     });
 }
