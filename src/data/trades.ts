@@ -145,7 +145,7 @@ export const trades: Trade[] = [
     slug: 'pest-control',
     name: 'Pest Control',
     icon: 'X',
-    tagline: 'Termites, ants, roaches, rodents, and scorpions',
+    tagline: 'Termites, ants, roaches, rodents, and bees',
     description:
       'Bakersfield pest control. Termite inspection and treatment, ant and roach extermination, rodent removal, scorpion control, monthly service plans.',
     commonProblems: [
@@ -184,6 +184,52 @@ export const trades: Trade[] = [
       'I want to replace my cracked driveway',
       'Need a new concrete patio behind my house',
       'There is a big crack across my garage floor',
+    ],
+  },
+  {
+    slug: 'landscaping',
+    name: 'Landscaping',
+    icon: 'L',
+    tagline: 'Lawn care, sod, irrigation, trees, and yard cleanup',
+    description:
+      'Bakersfield landscapers for weekly mowing, sprinkler repair, sod installs, tree trimming, drought tolerant design, and full yard makeovers.',
+    commonProblems: [
+      'Need weekly lawn mowing service',
+      'Brown spots or dead patches in the lawn',
+      'Sprinkler or drip irrigation not working',
+      'Tree needs trimming or removal',
+      'Yard cleanup after storm or neglected season',
+      'Full yard makeover or new sod install',
+      'Drought tolerant landscape design',
+      'Hardscape work like pavers or rock beds',
+    ],
+    examplePrompts: [
+      'I need someone to mow my lawn weekly',
+      'My sprinklers stopped working in half the yard',
+      'The trees in my front yard need trimming',
+    ],
+  },
+  {
+    slug: 'junk-removal',
+    name: 'Junk Removal',
+    icon: 'J',
+    tagline: 'Furniture, appliances, debris, and yard waste hauling',
+    description:
+      'Bakersfield junk removal and hauling. Old furniture, appliances, construction debris, yard waste, garage cleanouts, and full estate cleanouts.',
+    commonProblems: [
+      'Old couch or furniture to haul away',
+      'Broken appliance pickup (fridge, washer, dryer, water heater)',
+      'Construction debris cleanup after a project',
+      'Yard waste, branches, or palm fronds hauling',
+      'Garage or shed cleanout',
+      'Estate cleanout or move out',
+      'Mattress and box spring disposal',
+      'Hot tub removal',
+    ],
+    examplePrompts: [
+      'I have an old couch I need hauled away',
+      'Need to get rid of a broken refrigerator',
+      'Just cleaned out my garage, need someone to haul the pile',
     ],
   },
 ];

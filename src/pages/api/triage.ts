@@ -173,6 +173,8 @@ const KEYWORDS: Record<string, string[]> = {
   'garage-door': ['garage door', 'garage opener', 'garage spring', 'garage track', 'garage panel', 'garage remote', 'garage sensor'],
   'pest-control': ['ants', 'termite', 'roach', 'rodent', 'mouse', 'mice', 'rats', 'scorpion', 'spider', 'wasp', 'bees', 'infestation', 'exterminator', 'pest control'],
   concrete: ['concrete', 'cement', 'driveway', 'patio', 'slab', 'foundation crack', 'walkway', 'sidewalk crack'],
+  landscaping: ['lawn', 'mow', 'mowing', 'sprinkler', 'irrigation', 'sod', 'landscape', 'landscaper', 'tree trim', 'tree removal', 'shrub', 'gardening', 'yard work', 'yard cleanup', 'pavers'],
+  'junk-removal': ['haul', 'hauling', 'junk', 'debris', 'old couch', 'old fridge', 'old furniture', 'mattress disposal', 'cleanout', 'pickup truck', 'yard waste', 'palm frond'],
 };
 
 function keywordTriage(problem: string): string | null {
