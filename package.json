@@ -24,6 +24,7 @@
     "@capacitor/ios": "^8.3.1",
     "@tailwindcss/vite": "^4.2.4",
     "astro": "^6.2.1",
+    "resend": "^6.12.2",
     "tailwindcss": "^4.2.4"
   },
   "devDependencies": {
