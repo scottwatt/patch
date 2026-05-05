@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Stars from '../../components/Stars.astro';
 import { partners, partnerById } from '../../data/partners';
 import { tradeBySlug } from '../../data/trades';
+import { getPlaceData } from '../../data/places';
 
 export async function getStaticPaths() {
   return partners.map((p) => ({ params: { id: p.id } }));
@@ -19,6 +20,7 @@ if (!pro) {
 
 const trade = tradeBySlug(pro.trade);
 const tel = pro.phone.replace(/[^0-9+]/g, '');
+const place = await getPlaceData(pro);
 ---
 
 <Layout
@@ -86,6 +88,43 @@ const tel = pro.phone.replace(/[^0-9+]/g, '');
         )}
       </div>
     </div>
+
+    {place.hours && place.hours.length > 0 && (
+      <div class="bg-white border border-line rounded-2xl p-6">
+        <h2 class="font-semibold text-lg text-brand mb-3">Hours</h2>
+        <ul class="space-y-1.5 text-sm text-ink/80">
+          {place.hours.map((h) => (
+            <li class="flex justify-between">
+              <span>{h.split(':')[0]}</span>
+              <span class="text-muted">{h.split(':').slice(1).join(':').trim()}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {place.reviews && place.reviews.length > 0 && (
+      <div class="bg-white border border-line rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-semibold text-lg text-brand">Recent reviews</h2>
+          {place.source === 'google' && (
+            <span class="text-xs text-muted">Powered by Google</span>
+          )}
+        </div>
+        <div class="space-y-4">
+          {place.reviews.map((r) => (
+            <div class="border-b border-line last:border-0 pb-4 last:pb-0">
+              <div class="flex items-center justify-between mb-1.5">
+                <div class="font-semibold text-sm text-ink">{r.author}</div>
+                <Stars rating={r.rating} showCount={false} />
+              </div>
+              <p class="text-sm text-ink/80 leading-relaxed">{r.text}</p>
+              {r.date && <div class="text-xs text-muted mt-1.5">{r.date}</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
 
     <div class="bg-white border border-line rounded-2xl p-6 text-center">
       <h2 class="font-semibold text-lg text-brand mb-1">Ready to call?</h2>

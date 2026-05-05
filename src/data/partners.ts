@@ -1,5 +1,12 @@
 export type PartnerTier = 'featured' | 'standard';
 
+export type Review = {
+  author: string;
+  rating: number;
+  date: string;
+  text: string;
+};
+
 export type Partner = {
   id: string;
   name: string;
@@ -14,6 +21,12 @@ export type Partner = {
   rating?: number;
   reviewCount?: number;
   about?: string;
+  // Optional: Google Places ID for auto fetching hours and reviews at build time.
+  // Look up at https://developers.google.com/maps/documentation/places/web-service/place-id
+  googlePlaceId?: string;
+  // Optional manual overrides. If set, win over anything Google returns.
+  hours?: string[];
+  reviews?: Review[];
 };
 
 // rating + reviewCount are pulled from each contractor's public Google Business profile.
