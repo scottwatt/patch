@@ -98,7 +98,7 @@ async function findPlace(query, phone) {
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`HTTP ${res.status}: ${text.slice(0, 200)}`);
+    throw new Error(`HTTP ${res.status}: ${text}`);
   }
   const data = await res.json();
   if (!data.places?.length) return null;
