@@ -37,6 +37,8 @@ const place = await getPlaceData(pro);
             {pro.tier === 'featured' && <span class="text-[10px] uppercase tracking-wider font-semibold bg-accent text-white px-2 py-0.5 rounded">Featured</span>}
             {pro.licensed && <span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">Licensed</span>}
             {pro.insured && <span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">Insured</span>}
+            {pro.open24Hours && <span class="text-[10px] uppercase tracking-wider font-medium bg-accent/10 text-accent px-2 py-0.5 rounded">24/7</span>}
+            {pro.freeEstimates && <span class="text-[10px] uppercase tracking-wider font-medium bg-accent/10 text-accent px-2 py-0.5 rounded">Free Estimates</span>}
           </div>
           <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-brand">{pro.name}</h1>
           {pro.rating !== undefined && (

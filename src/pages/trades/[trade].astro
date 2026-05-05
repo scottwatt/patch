@@ -56,6 +56,8 @@ const description = `${trade.description} Common: ${trade.commonProblems.slice(0
                         <span class="text-[10px] uppercase tracking-wider font-semibold bg-accent text-white px-2 py-0.5 rounded">Featured</span>
                         {p.licensed && <span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">Licensed</span>}
                         {p.insured && <span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">Insured</span>}
+                        {p.open24Hours && <span class="text-[10px] uppercase tracking-wider font-medium bg-accent/10 text-accent px-2 py-0.5 rounded">24/7</span>}
+                        {p.freeEstimates && <span class="text-[10px] uppercase tracking-wider font-medium bg-accent/10 text-accent px-2 py-0.5 rounded">Free Estimates</span>}
                         {p.yearsInBusiness && <span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">{p.yearsInBusiness}+ yrs</span>}
                       </div>
                       <a href={`/pros/${p.id}`} class="font-semibold text-lg text-brand hover:text-accent">{p.name}</a>
@@ -91,6 +93,8 @@ const description = `${trade.description} Common: ${trade.commonProblems.slice(0
                       <div class="flex items-center gap-1.5 flex-wrap mb-2">
                         {p.licensed && <span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">Licensed</span>}
                         {p.insured && <span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">Insured</span>}
+                        {p.open24Hours && <span class="text-[10px] uppercase tracking-wider font-medium bg-accent/10 text-accent px-2 py-0.5 rounded">24/7</span>}
+                        {p.freeEstimates && <span class="text-[10px] uppercase tracking-wider font-medium bg-accent/10 text-accent px-2 py-0.5 rounded">Free Estimates</span>}
                         {p.yearsInBusiness && <span class="text-[10px] uppercase tracking-wider font-medium bg-soft text-muted px-2 py-0.5 rounded">{p.yearsInBusiness}+ yrs</span>}
                       </div>
                       <a href={`/pros/${p.id}`} class="font-semibold text-lg text-brand hover:text-accent">{p.name}</a>

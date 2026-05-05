@@ -25,8 +25,6 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { config as dotenv } from 'node:process';
-
 // Load .env if present (Node 20.6+ supports --env-file flag, but we do it manually here).
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
